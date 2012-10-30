@@ -25,5 +25,7 @@ The full project includes:
 
 ACKNOWLEDGEMENTS
 This script is based on the work of:
-Heiko Behrens <http://heikobehrens.net/2009/08/27/obj2opengl/>
-Margaret Geroch <http://people.sc.fsu.edu/~jburkardt/pl_src/obj2opengl/obj2opengl.html>
+Heiko Behrens
+<http://heikobehrens.net/2009/08/27/obj2opengl/>
+Margaret Geroch
+<http://people.sc.fsu.edu/~jburkardt/pl_src/obj2opengl/obj2opengl.html>
