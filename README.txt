@@ -2,7 +2,7 @@ README
 
 mtl2opengl Version 1.1 (31 October 2012)
 Copyright © 2012 Ricardo Rendon Cepeda
-<http://www.rendoncepeda.com/
+<http://www.rendoncepeda.com/>
 
 
 ABOUT
