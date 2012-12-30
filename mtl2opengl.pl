@@ -25,7 +25,26 @@ Ricardo Rendon Cepeda <http://www.rendoncepeda.com/>
 
 =head1 VERSION
 
-31 October 2012 (1.1)
+30 December 2012 (1.2)
+
+=head1 VERSION HISTORY
+
+Version 1.2
+-----------
+- Reduced precision of outputs to 3 decimal places, resulting in a smaller header file.
+- Removed the "face line" comment occuring every 3 vertices, resulting in a smaller header file.
+- Vertices are written to the header file in sequential order, according to their associated material.
+- Materials are grouped to their appropriate vertices by keeping track of *first* and *count* integers for use with glDrawArrays(GL_TRIANGLES, *first*, *count*).
+- The new format mimics the the OBJ/MTL behavior where each face in the OBJ file points to a material in the MTL file.
+- The example Xcode project has been updated to include the script changes.
+- Resulting file reductions
+-- cubeOBJ.h: 17.0 MB -> 5.5 MB
+-- cubeMTL.h: 13.2 MB -> 2.0 KB
+-- Total reduction is approximately 82%
+
+Version 1.1
+-----------
+Original
 
 =head1 COPYRIGHT
 
@@ -378,34 +397,34 @@ sub loadDataMTL
 	  	if ($line =~ /Ka\s+.*/)
 	  	{	
 	    	@tokens= split(' ', $line);
-	    	$mValues[$numMaterials]->[0] = $tokens[1];
-	    	$mValues[$numMaterials]->[1] = $tokens[2];
-	    	$mValues[$numMaterials]->[2] = $tokens[3];
+	    	$mValues[$numMaterials]->[0] = sprintf "%.3f", $tokens[1];
+	    	$mValues[$numMaterials]->[1] = sprintf "%.3f", $tokens[2];
+	    	$mValues[$numMaterials]->[2] = sprintf "%.3f", $tokens[3];
 	  	}
 	  	
 	  	# diffuse
 	  	if ($line =~ /Kd\s+.*/)
 	  	{	
 	    	@tokens= split(' ', $line);
-	    	$mValues[$numMaterials]->[3] = $tokens[1];
-	    	$mValues[$numMaterials]->[4] = $tokens[2];
-	    	$mValues[$numMaterials]->[5] = $tokens[3];
+	    	$mValues[$numMaterials]->[3] = sprintf "%.3f", $tokens[1];
+	    	$mValues[$numMaterials]->[4] = sprintf "%.3f", $tokens[2];
+	    	$mValues[$numMaterials]->[5] = sprintf "%.3f", $tokens[3];
 	  	}
 	  	
 	  	# specular
 	  	if ($line =~ /Ks\s+.*/)
 	  	{	
 	    	@tokens= split(' ', $line);
-	    	$mValues[$numMaterials]->[6] = $tokens[1];
-	    	$mValues[$numMaterials]->[7] = $tokens[2];
-	    	$mValues[$numMaterials]->[8] = $tokens[3];
+	    	$mValues[$numMaterials]->[6] = sprintf "%.3f", $tokens[1];
+	    	$mValues[$numMaterials]->[7] = sprintf "%.3f", $tokens[2];
+	    	$mValues[$numMaterials]->[8] = sprintf "%.3f", $tokens[3];
 	  	} 
 	  	
 	  	# exponent
 	  	if ($line =~ /Ns\s+.*/)
 	  	{	
 	    	@tokens= split(' ', $line);
-	    	$mValues[$numMaterials]->[9] = $tokens[1];
+	    	$mValues[$numMaterials]->[9] = sprintf "%.3f", $tokens[1];
 	  	}   
 	}
 	close INFILEMTL;
@@ -450,9 +469,9 @@ sub loadDataOBJ
 	    	$x = ( $tokens[1] - $xcen ) * $scalefac;
 	    	$y = ( $tokens[2] - $ycen ) * $scalefac;
 	    	$z = ( $tokens[3] - $zcen ) * $scalefac;    
-	    	$xcoords[$numVerts] = $x; 
-	    	$ycoords[$numVerts] = $y;
-	    	$zcoords[$numVerts] = $z;
+	    	$xcoords[$numVerts] = sprintf "%.3f", $x; 
+	    	$ycoords[$numVerts] = sprintf "%.3f", $y;
+	    	$zcoords[$numVerts] = sprintf "%.3f", $z;
 	
 	    	$numVerts++;
 	  	}
@@ -463,8 +482,8 @@ sub loadDataOBJ
 	    	@tokens= split(' ', $line);
 	    	$x = $tokens[1];
 	    	$y = 1 - $tokens[2];
-	    	$tx[$numTexture] = $x;
-	    	$ty[$numTexture] = $y;
+	    	$tx[$numTexture] = sprintf "%.3f", $x;
+	    	$ty[$numTexture] = sprintf "%.3f", $y;
 	    
 	    	$numTexture++;
 	  	}
@@ -476,9 +495,9 @@ sub loadDataOBJ
 	    	$x = $tokens[1];
 	    	$y = $tokens[2];
 	    	$z = $tokens[3];
-	    	$nx[$numNormals] = $x; 
-	    	$ny[$numNormals] = $y;
-	    	$nz[$numNormals] = $z;
+	    	$nx[$numNormals] = sprintf "%.3f", $x; 
+	    	$ny[$numNormals] = sprintf "%.3f", $y;
+	    	$nz[$numNormals] = sprintf "%.3f", $z;
 		
 	    	$numNormals++;
 	  	}
@@ -563,15 +582,15 @@ sub normalizeNormals
 	  	}
 	  	else
 	  	{
-	    	$nx[$j] = $nx[$j] / $d;
-	    	$ny[$j] = $ny[$j] / $d;
-	    	$nz[$j] = $nz[$j] / $d;
+	    	$nx[$j] = sprintf "%.3f", ($nx[$j] / $d);
+	    	$ny[$j] = sprintf "%.3f", ($ny[$j] / $d);
+	    	$nz[$j] = sprintf "%.3f", ($nz[$j] / $d);
 	  	}  
 	}
 }
 
 sub writeOutputOBJ 
-{
+{	
 	open ( OUTFILEOBJ, ">$outFilenameOBJ" ) 
 	  || die "Can't create file '$outFilenameOBJ' ... exiting\n";
 	
@@ -592,15 +611,24 @@ sub writeOutputOBJ
 	
 	# write verts
 	print OUTFILEOBJ "float ".$objectOBJ."Verts \[\] = {\n"; 
-	for( $j = 0; $j < $numFaces; $j++)
+	for($i = 0; $i < $numMaterials; $i++) 
 	{
-		$ia = $va_idx[$j];
-		$ib = $vb_idx[$j];
-		$ic = $vc_idx[$j];
-		print OUTFILEOBJ "  // $face_line[$j]\n";
-		print OUTFILEOBJ "  $xcoords[$ia], $ycoords[$ia], $zcoords[$ia],\n";
-		print OUTFILEOBJ "  $xcoords[$ib], $ycoords[$ib], $zcoords[$ib],\n";
-		print OUTFILEOBJ "  $xcoords[$ic], $ycoords[$ic], $zcoords[$ic],\n";
+		$mCount[$i] = 0;
+		
+		for( $j = 0; $j < $numFaces; $j++)
+		{
+			if($face_mtl[$j] eq $mNames[$i])
+			{
+				$ia = $va_idx[$j];
+				$ib = $vb_idx[$j];
+				$ic = $vc_idx[$j];
+				print OUTFILEOBJ "  $xcoords[$ia], $ycoords[$ia], $zcoords[$ia],\n";
+				print OUTFILEOBJ "  $xcoords[$ib], $ycoords[$ib], $zcoords[$ib],\n";
+				print OUTFILEOBJ "  $xcoords[$ic], $ycoords[$ic], $zcoords[$ic],\n";
+				
+				$mCount[$i] += 3;
+			}
+		}
 	}
 	print OUTFILEOBJ "};\n\n";
 	
@@ -608,15 +636,20 @@ sub writeOutputOBJ
 	if($numNormals > 0) 
 	{
 		print OUTFILEOBJ "float ".$objectOBJ."Normals \[\] = {\n"; 
-		for( $j = 0; $j < $numFaces; $j++) 
+		for($i = 0; $i < $numMaterials; $i++) 
 		{
-			$ia = $na_idx[$j];
-			$ib = $nb_idx[$j];
-			$ic = $nc_idx[$j];
-			print OUTFILEOBJ "  // $face_line[$j]\n";
-			print OUTFILEOBJ "  $nx[$ia], $ny[$ia], $nz[$ia],\n";
-			print OUTFILEOBJ "  $nx[$ib], $ny[$ib], $nz[$ib],\n";
-			print OUTFILEOBJ "  $nx[$ic], $ny[$ic], $nz[$ic],\n";
+			for( $j = 0; $j < $numFaces; $j++)
+			{
+				if($face_mtl[$j] eq $mNames[$i])
+				{
+					$ia = $na_idx[$j];
+					$ib = $nb_idx[$j];
+					$ic = $nc_idx[$j];
+					print OUTFILEOBJ "  $nx[$ia], $ny[$ia], $nz[$ia],\n";
+					print OUTFILEOBJ "  $nx[$ib], $ny[$ib], $nz[$ib],\n";
+					print OUTFILEOBJ "  $nx[$ic], $ny[$ic], $nz[$ic],\n";
+				}
+			}
 		}
 		print OUTFILEOBJ "};\n\n";
 	}
@@ -625,18 +658,24 @@ sub writeOutputOBJ
 	if($numTexture) 
 	{
 		print OUTFILEOBJ "float ".$objectOBJ."TexCoords \[\] = {\n"; 
-		for( $j = 0; $j < $numFaces; $j++) 
+		for($i = 0; $i < $numMaterials; $i++) 
 		{
-			$ia = $ta_idx[$j];
-			$ib = $tb_idx[$j];
-			$ic = $tc_idx[$j];
-			print OUTFILEOBJ "  // $face_line[$j]\n";
-			print OUTFILEOBJ "  $tx[$ia], $ty[$ia],\n";
-			print OUTFILEOBJ "  $tx[$ib], $ty[$ib],\n";
-			print OUTFILEOBJ "  $tx[$ic], $ty[$ic],\n";
+			for( $j = 0; $j < $numFaces; $j++) 
+			{
+				if($face_mtl[$j] eq $mNames[$i])
+				{
+					$ia = $ta_idx[$j];
+					$ib = $tb_idx[$j];
+					$ic = $tc_idx[$j];
+					print OUTFILEOBJ "  $tx[$ia], $ty[$ia],\n";
+					print OUTFILEOBJ "  $tx[$ib], $ty[$ib],\n";
+					print OUTFILEOBJ "  $tx[$ic], $ty[$ic],\n";
+				}
+			}
 		}
 		print OUTFILEOBJ "};\n\n";
 	}
+	
 	close OUTFILEOBJ;
 }
 
@@ -673,100 +712,81 @@ sub writeOutputMTL
 	print OUTFILEMTL "*/\n";
 	print OUTFILEMTL "\n\n";
 	
-	# write ambient
-	print OUTFILEMTL "float ".$objectMTL."Ambient \[\] = {\n";
-	for($i = 0; $i < $numFaces; $i++)
+	# needed constant for glDrawArrays
+	print OUTFILEMTL "int ".$objectMTL."NumMaterials = ".$numMaterials.";\n\n";
+	
+	# write firsts
+	print OUTFILEMTL "int ".$objectMTL."First [$numMaterials] = {\n";
+	for($i = 0; $i < $numMaterials; $i++)
 	{
-		$j = 0;
-	    foreach(@mNames)
-	    {
-	    	if($face_mtl[$i] eq $mNames[$j])
-	    	{
-	    		$mtl = $j;
-	    	}
-	    	
-	    	$j++;
-	    }
-	    
-	    $kaR = $mValues[$mtl]->[0];
-		$kaG = $mValues[$mtl]->[1];
-		$kaB = $mValues[$mtl]->[2];
+		if($i == 0)
+		{
+			$first = 0;
+		}
+		else
+		{
+			$first += $mCount[$i-1];
+		}
 		
-		print OUTFILEMTL "  // $face_line[$i]\n";
-		print OUTFILEMTL "  $kaR, $kaG, $kaB,\n"x3;
+		print OUTFILEMTL "  $first,\n";
 	}
 	print OUTFILEMTL "};\n\n";
 	
-	# write diffuse
-	print OUTFILEMTL "float ".$objectMTL."Diffuse \[\] = {\n";
-	for($i = 0; $i < $numFaces; $i++)
+	# write counts
+	print OUTFILEMTL "int ".$objectMTL."Count [$numMaterials] = {\n";
+	for($i = 0; $i < $numMaterials; $i++)
 	{
-		$j = 0;
-	    foreach(@mNames)
-	    {
-	    	if($face_mtl[$i] eq $mNames[$j])
-	    	{
-	    		$mtl = $j;
-	    	}
-	    	
-	    	$j++;
-	    }
-
-		$kdR = $mValues[$mtl]->[3];
-		$kdG = $mValues[$mtl]->[4];
-		$kdB = $mValues[$mtl]->[5];
+		$count = $mCount[$i];
 		
-		print OUTFILEMTL "  // $face_line[$i]\n";
-		print OUTFILEMTL "  $kdR, $kdG, $kdB,\n"x3;
+		print OUTFILEMTL "  $count,\n";
 	}
 	print OUTFILEMTL "};\n\n";
 	
-	# write specular
-	print OUTFILEMTL "float ".$objectMTL."Specular \[\] = {\n";
-	for($i = 0; $i < $numFaces; $i++)
+	# write ambients
+	print OUTFILEMTL "float ".$objectMTL."Ambient [$numMaterials][3] = {\n";
+	for($i = 0; $i < $numMaterials; $i++)
 	{
-		$j = 0;
-	    foreach(@mNames)
-	    {
-	    	if($face_mtl[$i] eq $mNames[$j])
-	    	{
-	    		$mtl = $j;
-	    	}
-	    	
-	    	$j++;
-	    }
-	    
-		$ksR = $mValues[$mtl]->[6];
-		$ksG = $mValues[$mtl]->[7];
-		$ksB = $mValues[$mtl]->[8];
+		$kaR = $mValues[$i]->[0];
+		$kaG = $mValues[$i]->[1];
+		$kaB = $mValues[$i]->[2];
 		
-		print OUTFILEMTL "  // $face_line[$i]\n";
-		print OUTFILEMTL "  $ksR, $ksG, $ksB,\n"x3;
+		print OUTFILEMTL "  $kaR, $kaG, $kaB,\n";
 	}
 	print OUTFILEMTL "};\n\n";
 	
-	# write exponent
-	print OUTFILEMTL "float ".$objectMTL."Exponent \[\] = {\n";
-	for($i = 0; $i < $numFaces; $i++)
+	# write diffuses
+	print OUTFILEMTL "float ".$objectMTL."Diffuse [$numMaterials][3] = {\n";
+	for($i = 0; $i < $numMaterials; $i++)
 	{
-		$j = 0;
-	    foreach(@mNames)
-	    {
-	    	if($face_mtl[$i] eq $mNames[$j])
-	    	{
-	    		$mtl = $j;
-	    	}
-	    	
-	    	$j++;
-	    }
+		$kdR = $mValues[$i]->[3];
+		$kdG = $mValues[$i]->[4];
+		$kdB = $mValues[$i]->[5];
 		
-		$nsE = $mValues[$mtl]->[9];
+		print OUTFILEMTL "  $kdR, $kdG, $kdB,\n";
+	}
+	print OUTFILEMTL "};\n\n";
+	
+	# write speculars
+	print OUTFILEMTL "float ".$objectMTL."Specular [$numMaterials][3] = {\n";
+	for($i = 0; $i < $numMaterials; $i++)
+	{
+		$ksR = $mValues[$i]->[6];
+		$ksG = $mValues[$i]->[7];
+		$ksB = $mValues[$i]->[8];
 		
-		print OUTFILEMTL "  // $face_line[$i]\n";
-		print OUTFILEMTL "  $nsE,\n"x3;
+		print OUTFILEMTL "  $ksR, $ksG, $ksB,\n";
+	}
+	print OUTFILEMTL "};\n\n";
+	
+	# write exponents
+	print OUTFILEMTL "float ".$objectMTL."Exponent [$numMaterials] = {\n";
+	for($i = 0; $i < $numMaterials; $i++)
+	{
+		$nsE = $mValues[$i]->[9];
+		
+		print OUTFILEMTL "  $nsE,\n";
 	}
 	print OUTFILEMTL "};\n\n";
 	    	
 	close OUTFILEMTL;
 }
-

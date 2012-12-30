@@ -16,11 +16,6 @@ struct AttributeHandles
     GLint   aVertex;
     GLint   aNormal;
     GLint   aTexture;
-    
-    GLint   aAmbient;
-    GLint   aDiffuse;
-    GLint   aSpecular;
-    GLint   aShine;
 };
 
 struct UniformHandles
@@ -28,6 +23,11 @@ struct UniformHandles
     GLuint  uProjectionMatrix;
     GLuint  uModelViewMatrix;
     GLuint  uNormalMatrix;
+    
+    GLint   uAmbient;
+    GLint   uDiffuse;
+    GLint   uSpecular;
+    GLint   uExponent;
     
     GLint   uTexture;
     GLint   uMode;
@@ -71,7 +71,7 @@ struct UniformHandles
     
     // Projection Matrix
     float aspectRatio = fabsf(self.view.bounds.size.width / self.view.bounds.size.height);
-    _projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(100.0), aspectRatio, 0.1, 1.1);
+    _projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(90.0f), aspectRatio, 0.1, 1.1);
     
     // ModelView Matrix
     _modelViewMatrix = GLKMatrix4Identity;
@@ -88,15 +88,15 @@ struct UniformHandles
     _attributes.aVertex = glGetAttribLocation(_program, "aVertex");
     _attributes.aNormal = glGetAttribLocation(_program, "aNormal");
     _attributes.aTexture = glGetAttribLocation(_program, "aTexture");
-    _attributes.aAmbient = glGetAttribLocation(_program, "aAmbient");
-    _attributes.aDiffuse = glGetAttribLocation(_program, "aDiffuse");
-    _attributes.aSpecular = glGetAttribLocation(_program, "aSpecular");
-    _attributes.aShine = glGetAttribLocation(_program, "aShine");
     
     // Extract the uniform handles
     _uniforms.uProjectionMatrix = glGetUniformLocation(_program, "uProjectionMatrix");
     _uniforms.uModelViewMatrix = glGetUniformLocation(_program, "uModelViewMatrix");
     _uniforms.uNormalMatrix = glGetUniformLocation(_program, "uNormalMatrix");
+    _uniforms.uAmbient = glGetUniformLocation(_program, "uAmbient");
+    _uniforms.uDiffuse = glGetUniformLocation(_program, "uDiffuse");
+    _uniforms.uSpecular = glGetUniformLocation(_program, "uSpecular");
+    _uniforms.uExponent = glGetUniformLocation(_program, "uExponent");
     _uniforms.uTexture = glGetUniformLocation(_program, "uTexture");
     _uniforms.uMode = glGetUniformLocation(_program, "uMode");
 }
@@ -123,7 +123,7 @@ struct UniformHandles
     _modelViewMatrix = GLKMatrix4Rotate(_modelViewMatrix, GLKMathDegreesToRadians(self.rotateX.value), 1.0, 0.0, 0.0);
     _modelViewMatrix = GLKMatrix4Rotate(_modelViewMatrix, GLKMathDegreesToRadians(self.rotateY.value), 0.0, 1.0, 0.0);
     _modelViewMatrix = GLKMatrix4Rotate(_modelViewMatrix, GLKMathDegreesToRadians(self.rotateZ.value), 0.0, 0.0, 1.0);
-    _modelViewMatrix = GLKMatrix4Scale(_modelViewMatrix, 0.33, 0.33, 0.33);
+    _modelViewMatrix = GLKMatrix4Scale(_modelViewMatrix, 0.30, 0.33, 0.30);
     
     // Normal Matrix
     // Transform object-space normals into eye-space
@@ -155,26 +155,6 @@ struct UniformHandles
     glUniformMatrix4fv(_uniforms.uModelViewMatrix, 1, 0, _modelViewMatrix.m);
     glUniformMatrix3fv(_uniforms.uNormalMatrix, 1, 0, _normalMatrix.m);
     
-    // Enable Attributes
-    glEnableVertexAttribArray(_attributes.aVertex);
-    glEnableVertexAttribArray(_attributes.aNormal);
-    glEnableVertexAttribArray(_attributes.aTexture);
-    glEnableVertexAttribArray(_attributes.aAmbient);
-    glEnableVertexAttribArray(_attributes.aDiffuse);
-    glEnableVertexAttribArray(_attributes.aSpecular);
-    glEnableVertexAttribArray(_attributes.aShine);
-    
-    // Load OBJ Data
-    glVertexAttribPointer(_attributes.aVertex, 3, GL_FLOAT, GL_FALSE, 0, cubeOBJVerts);
-    glVertexAttribPointer(_attributes.aNormal, 3, GL_FLOAT, GL_FALSE, 0, cubeOBJNormals);
-    glVertexAttribPointer(_attributes.aTexture, 2, GL_FLOAT, GL_FALSE, 0, cubeOBJTexCoords);
-    
-    // Load MTL Data
-    glVertexAttribPointer(_attributes.aAmbient, 3, GL_FLOAT, GL_FALSE, 0, cubeMTLAmbient);
-    glVertexAttribPointer(_attributes.aDiffuse, 3, GL_FLOAT, GL_FALSE, 0, cubeMTLDiffuse);
-    glVertexAttribPointer(_attributes.aSpecular, 3, GL_FLOAT, GL_FALSE, 0, cubeMTLSpecular);
-    glVertexAttribPointer(_attributes.aShine, 1, GL_FLOAT, GL_FALSE, 0, cubeMTLExponent);
-    
     // Attach Texture
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _texture);
@@ -183,16 +163,32 @@ struct UniformHandles
     // Set View Mode
     glUniform1i(_uniforms.uMode, self.viewMode.selectedSegmentIndex);
     
-    // Draw Scene
-    glDrawArrays(GL_TRIANGLES, 0, cubeOBJNumVerts);
+    // Enable Attributes
+    glEnableVertexAttribArray(_attributes.aVertex);
+    glEnableVertexAttribArray(_attributes.aNormal);
+    glEnableVertexAttribArray(_attributes.aTexture);
+    
+    // Load OBJ Data
+    glVertexAttribPointer(_attributes.aVertex, 3, GL_FLOAT, GL_FALSE, 0, cubeOBJVerts);
+    glVertexAttribPointer(_attributes.aNormal, 3, GL_FLOAT, GL_FALSE, 0, cubeOBJNormals);
+    glVertexAttribPointer(_attributes.aTexture, 2, GL_FLOAT, GL_FALSE, 0, cubeOBJTexCoords);
+    
+    // Load MTL Data
+    for(int i=0; i<cubeMTLNumMaterials; i++)
+    {
+        glUniform3f(_uniforms.uAmbient, cubeMTLAmbient[i][0], cubeMTLAmbient[i][1], cubeMTLAmbient[i][2]);
+        glUniform3f(_uniforms.uDiffuse, cubeMTLDiffuse[i][0], cubeMTLDiffuse[i][1], cubeMTLDiffuse[i][2]);
+        glUniform3f(_uniforms.uSpecular, cubeMTLSpecular[i][0], cubeMTLSpecular[i][1], cubeMTLSpecular[i][2]);
+        glUniform1f(_uniforms.uExponent, cubeMTLExponent[i]);
+        
+        // Draw scene by material group
+        glDrawArrays(GL_TRIANGLES, cubeMTLFirst[i], cubeMTLCount[i]);
+    }
     
     // Disable Attributes
     glDisableVertexAttribArray(_attributes.aVertex);
     glDisableVertexAttribArray(_attributes.aNormal);
-    glDisableVertexAttribArray(_attributes.aAmbient);
-    glDisableVertexAttribArray(_attributes.aDiffuse);
-    glDisableVertexAttribArray(_attributes.aSpecular);
-    glDisableVertexAttribArray(_attributes.aShine);
+    glDisableVertexAttribArray(_attributes.aTexture);
 }
 
 # pragma mark - GLKViewController Delegate

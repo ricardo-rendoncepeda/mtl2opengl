@@ -27,8 +27,6 @@
 		AE128E08163EF2E10044AD30 /* cube.mtl */ = {isa = PBXFileReference; lastKnownFileType = text; path = cube.mtl; sourceTree = "<group>"; };
 		AE128E09163EF2E10044AD30 /* cube.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
 		AE128E0A163EF2E10044AD30 /* cube.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cube.png; sourceTree = "<group>"; };
-		AE128E0B163EF2E10044AD30 /* cubeMTL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cubeMTL.h; sourceTree = "<group>"; };
-		AE128E0C163EF2E10044AD30 /* cubeOBJ.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cubeOBJ.h; sourceTree = "<group>"; };
 		AE2AC92F1634534000E0DBFD /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		AE38F028163CB3B500FBD0AC /* pyramid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pyramid.png; sourceTree = "<group>"; };
 		AE4E12811632D40B00D90D0C /* MTL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MTL.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -52,8 +50,10 @@
 		AE4E12C41632D6EB00D90D0C /* Shader.fsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = Shader.fsh; sourceTree = "<group>"; };
 		AE770AA5163EC4E200C66AC5 /* pyramid.mtl */ = {isa = PBXFileReference; lastKnownFileType = text; path = pyramid.mtl; sourceTree = "<group>"; };
 		AE770AA6163EC4E200C66AC5 /* pyramid.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = pyramid.obj; sourceTree = "<group>"; };
-		AE770AA7163EC4E200C66AC5 /* pyramidMTL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pyramidMTL.h; sourceTree = "<group>"; };
-		AE770AA8163EC4E200C66AC5 /* pyramidOBJ.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pyramidOBJ.h; sourceTree = "<group>"; };
+		AEE7D425169097AE003E94A3 /* cubeMTL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cubeMTL.h; sourceTree = "<group>"; };
+		AEE7D426169097AE003E94A3 /* cubeOBJ.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cubeOBJ.h; sourceTree = "<group>"; };
+		AEE7D427169097AE003E94A3 /* pyramidMTL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pyramidMTL.h; sourceTree = "<group>"; };
+		AEE7D428169097AE003E94A3 /* pyramidOBJ.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pyramidOBJ.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,13 +145,13 @@
 				AE128E0A163EF2E10044AD30 /* cube.png */,
 				AE128E08163EF2E10044AD30 /* cube.mtl */,
 				AE128E09163EF2E10044AD30 /* cube.obj */,
-				AE128E0B163EF2E10044AD30 /* cubeMTL.h */,
-				AE128E0C163EF2E10044AD30 /* cubeOBJ.h */,
+				AEE7D425169097AE003E94A3 /* cubeMTL.h */,
+				AEE7D426169097AE003E94A3 /* cubeOBJ.h */,
 				AE38F028163CB3B500FBD0AC /* pyramid.png */,
 				AE770AA5163EC4E200C66AC5 /* pyramid.mtl */,
 				AE770AA6163EC4E200C66AC5 /* pyramid.obj */,
-				AE770AA7163EC4E200C66AC5 /* pyramidMTL.h */,
-				AE770AA8163EC4E200C66AC5 /* pyramidOBJ.h */,
+				AEE7D427169097AE003E94A3 /* pyramidMTL.h */,
+				AEE7D428169097AE003E94A3 /* pyramidOBJ.h */,
 			);
 			name = Models;
 			sourceTree = "<group>";

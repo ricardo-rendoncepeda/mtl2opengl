@@ -6,10 +6,12 @@ static const char* ShaderF = STRINGIFY
 // Input from Vertex Shader
 varying mediump vec3 vNormal;
 varying mediump vec2 vTexture;
-varying lowp vec3 vAmbient;
-varying lowp vec3 vDiffuse;
-varying lowp vec3 vSpecular;
-varying highp float vShine;
+ 
+// MTL Data
+uniform lowp vec3 uAmbient;
+uniform lowp vec3 uDiffuse;
+uniform lowp vec3 uSpecular;
+uniform highp float uExponent;
  
 uniform lowp int uMode;
 uniform lowp vec3 uColor;
@@ -20,18 +22,18 @@ lowp vec3 materialDefault(highp float df, highp float sf)
     lowp vec3 ambient = vec3(0.5);
     lowp vec3 diffuse = vec3(0.5);
     lowp vec3 specular = vec3(0.0);
-    highp float shine = 1.0;
+    highp float exponent = 1.0;
     
-    sf = pow(sf, shine);
+    sf = pow(sf, exponent);
     
     return (ambient + (df * diffuse) + (sf * specular));
 }
  
 lowp vec3 materialMTL(highp float df, highp float sf)
 {
-    sf = pow(sf, vShine);
+    sf = pow(sf, uExponent);
 
-    return (vAmbient + (df * vDiffuse) + (sf * vSpecular));
+    return (uAmbient + (df * uDiffuse) + (sf * uSpecular));
 }
  
 lowp vec3 modelColor(void)
