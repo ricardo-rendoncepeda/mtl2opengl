@@ -1,7 +1,7 @@
 // Created with mtl2opengl.pl
 
 /*
-source files: ./pyramid.obj, ./pyramid.mtl
+source files: Resources/pyramid.obj, Resources/pyramid.mtl
 materials: 4
 
 Name: blinnGSG
@@ -34,44 +34,44 @@ Ns: 48.000
 int pyramidMTLNumMaterials = 4;
 
 int pyramidMTLFirst [4] = {
-  0,
-  3,
-  6,
-  9,
+0,
+3,
+6,
+9,
 };
 
 int pyramidMTLCount [4] = {
-  3,
-  3,
-  3,
-  3,
+3,
+3,
+3,
+3,
 };
 
 float pyramidMTLAmbient [4][3] = {
-  0.000, 0.100, 0.000,
-  0.500, 0.500, 0.500,
-  0.100, 0.000, 0.000,
-  0.000, 0.000, 0.100,
+0.000,0.100,0.000,
+0.500,0.500,0.500,
+0.100,0.000,0.000,
+0.000,0.000,0.100,
 };
 
 float pyramidMTLDiffuse [4][3] = {
-  0.000, 0.900, 0.000,
-  0.500, 0.500, 0.500,
-  0.900, 0.000, 0.000,
-  0.000, 0.000, 0.900,
+0.000,0.900,0.000,
+0.500,0.500,0.500,
+0.900,0.000,0.000,
+0.000,0.000,0.900,
 };
 
 float pyramidMTLSpecular [4][3] = {
-  0.400, 0.400, 0.400,
-  0, 0, 0,
-  0, 0, 0,
-  0.600, 0.600, 0.600,
+0.400,0.400,0.400,
+0,0,0,
+0,0,0,
+0.600,0.600,0.600,
 };
 
 float pyramidMTLExponent [4] = {
-  1,
-  1,
-  1,
-  48.000,
+1,
+1,
+1,
+48.000,
 };
 

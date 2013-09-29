@@ -18,9 +18,10 @@
 		AE4E12961632D40B00D90D0C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AE4E12951632D40B00D90D0C /* AppDelegate.m */; };
 		AE4E129F1632D40B00D90D0C /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE4E129D1632D40B00D90D0C /* MainStoryboard.storyboard */; };
 		AE4E12A21632D40B00D90D0C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE4E12A11632D40B00D90D0C /* ViewController.m */; };
-		AE4E12BA1632D55A00D90D0C /* ShaderProcessor.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE4E12B91632D55A00D90D0C /* ShaderProcessor.mm */; };
+		AE4E12BA1632D55A00D90D0C /* ShaderProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = AE4E12B91632D55A00D90D0C /* ShaderProcessor.m */; };
 		AE4E12BC1632D58600D90D0C /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE4E12BB1632D58600D90D0C /* GLKit.framework */; };
 		AE4E12BE1632D58C00D90D0C /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE4E12BD1632D58C00D90D0C /* OpenGLES.framework */; };
+		AEF3393E17F7B13A00DB4328 /* Transformations.m in Sources */ = {isa = PBXBuildFile; fileRef = AEF3393D17F7B13A00DB4328 /* Transformations.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,17 +44,19 @@
 		AE4E12A01632D40B00D90D0C /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		AE4E12A11632D40B00D90D0C /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		AE4E12B81632D55A00D90D0C /* ShaderProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderProcessor.h; sourceTree = "<group>"; };
-		AE4E12B91632D55A00D90D0C /* ShaderProcessor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ShaderProcessor.mm; sourceTree = "<group>"; };
+		AE4E12B91632D55A00D90D0C /* ShaderProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShaderProcessor.m; sourceTree = "<group>"; };
 		AE4E12BB1632D58600D90D0C /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		AE4E12BD1632D58C00D90D0C /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		AE4E12C21632D6E000D90D0C /* Shader.vsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = Shader.vsh; sourceTree = "<group>"; };
 		AE4E12C41632D6EB00D90D0C /* Shader.fsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = Shader.fsh; sourceTree = "<group>"; };
 		AE770AA5163EC4E200C66AC5 /* pyramid.mtl */ = {isa = PBXFileReference; lastKnownFileType = text; path = pyramid.mtl; sourceTree = "<group>"; };
 		AE770AA6163EC4E200C66AC5 /* pyramid.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = pyramid.obj; sourceTree = "<group>"; };
-		AEE7D425169097AE003E94A3 /* cubeMTL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cubeMTL.h; sourceTree = "<group>"; };
-		AEE7D426169097AE003E94A3 /* cubeOBJ.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cubeOBJ.h; sourceTree = "<group>"; };
-		AEE7D427169097AE003E94A3 /* pyramidMTL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pyramidMTL.h; sourceTree = "<group>"; };
-		AEE7D428169097AE003E94A3 /* pyramidOBJ.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pyramidOBJ.h; sourceTree = "<group>"; };
+		AEF3393717F7ADEF00DB4328 /* cubeMTL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cubeMTL.h; sourceTree = "<group>"; };
+		AEF3393817F7ADEF00DB4328 /* cubeOBJ.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cubeOBJ.h; sourceTree = "<group>"; };
+		AEF3393917F7ADEF00DB4328 /* pyramidMTL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pyramidMTL.h; sourceTree = "<group>"; };
+		AEF3393A17F7ADEF00DB4328 /* pyramidOBJ.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pyramidOBJ.h; sourceTree = "<group>"; };
+		AEF3393C17F7B13A00DB4328 /* Transformations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transformations.h; sourceTree = "<group>"; };
+		AEF3393D17F7B13A00DB4328 /* Transformations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transformations.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +113,7 @@
 				AE4E129D1632D40B00D90D0C /* MainStoryboard.storyboard */,
 				AE4E12A01632D40B00D90D0C /* ViewController.h */,
 				AE4E12A11632D40B00D90D0C /* ViewController.m */,
+				AEF3393B17F7B11C00DB4328 /* Transformations */,
 				AE4E12C11632D6A300D90D0C /* Models */,
 				AE4E12C01632D68D00D90D0C /* Shaders */,
 				AE4E128C1632D40B00D90D0C /* Supporting Files */,
@@ -132,7 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				AE4E12B81632D55A00D90D0C /* ShaderProcessor.h */,
-				AE4E12B91632D55A00D90D0C /* ShaderProcessor.mm */,
+				AE4E12B91632D55A00D90D0C /* ShaderProcessor.m */,
 				AE4E12C21632D6E000D90D0C /* Shader.vsh */,
 				AE4E12C41632D6EB00D90D0C /* Shader.fsh */,
 			);
@@ -145,15 +149,24 @@
 				AE128E0A163EF2E10044AD30 /* cube.png */,
 				AE128E08163EF2E10044AD30 /* cube.mtl */,
 				AE128E09163EF2E10044AD30 /* cube.obj */,
-				AEE7D425169097AE003E94A3 /* cubeMTL.h */,
-				AEE7D426169097AE003E94A3 /* cubeOBJ.h */,
+				AEF3393717F7ADEF00DB4328 /* cubeMTL.h */,
+				AEF3393817F7ADEF00DB4328 /* cubeOBJ.h */,
 				AE38F028163CB3B500FBD0AC /* pyramid.png */,
 				AE770AA5163EC4E200C66AC5 /* pyramid.mtl */,
 				AE770AA6163EC4E200C66AC5 /* pyramid.obj */,
-				AEE7D427169097AE003E94A3 /* pyramidMTL.h */,
-				AEE7D428169097AE003E94A3 /* pyramidOBJ.h */,
+				AEF3393917F7ADEF00DB4328 /* pyramidMTL.h */,
+				AEF3393A17F7ADEF00DB4328 /* pyramidOBJ.h */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		AEF3393B17F7B11C00DB4328 /* Transformations */ = {
+			isa = PBXGroup;
+			children = (
+				AEF3393C17F7B13A00DB4328 /* Transformations.h */,
+				AEF3393D17F7B13A00DB4328 /* Transformations.m */,
+			);
+			name = Transformations;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -184,6 +197,11 @@
 			attributes = {
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = RRC;
+				TargetAttributes = {
+					AE4E12801632D40B00D90D0C = {
+						DevelopmentTeam = MA2Z5GV8LF;
+					};
+				};
 			};
 			buildConfigurationList = AE4E127B1632D40B00D90D0C /* Build configuration list for PBXProject "MTL" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -222,10 +240,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AEF3393E17F7B13A00DB4328 /* Transformations.m in Sources */,
 				AE4E12921632D40B00D90D0C /* main.m in Sources */,
 				AE4E12961632D40B00D90D0C /* AppDelegate.m in Sources */,
 				AE4E12A21632D40B00D90D0C /* ViewController.m in Sources */,
-				AE4E12BA1632D55A00D90D0C /* ShaderProcessor.mm in Sources */,
+				AE4E12BA1632D55A00D90D0C /* ShaderProcessor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,10 +323,13 @@
 		AE4E12A61632D40B00D90D0C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MTL/MTL-Prefix.pch";
 				INFOPLIST_FILE = "MTL/MTL-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -315,10 +337,13 @@
 		AE4E12A71632D40B00D90D0C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MTL/MTL-Prefix.pch";
 				INFOPLIST_FILE = "MTL/MTL-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

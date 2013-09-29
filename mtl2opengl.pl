@@ -25,9 +25,21 @@ Ricardo Rendon Cepeda <http://www.rendoncepeda.com/>
 
 =head1 VERSION
 
-30 December 2012 (1.2)
+28 September 2013 (1.3)
 
 =head1 VERSION HISTORY
+
+Version 1.3
+-----------
+- Removed whitespace as suggested by @GuntisTreulands, resulting in a smaller header file.
+- The example Xcode project has been updated to include the script changes.
+- The example Xcode project has been updated to iOS 7.
+- The example Xcode project has better OpenGL ES performance for iPhone 4 due to decreased depth format and no multisample (now runs at 30 FPS)
+- The example Xcode project now uses gesture recognizers to transform the model: translate XY (1-finger pan), rotate XY (2-finger pan), rotate Z (rotation), scale XYZ (pinch).
+- Resulting file reductions
+-- cubeOBJ.h: 5.5 MB -> 4.6 MB
+-- cubeMTL.h: 2.0 KB -> 1.0 KB
+-- Total reduction is approximately 16%
 
 Version 1.2
 -----------
@@ -622,9 +634,9 @@ sub writeOutputOBJ
 				$ia = $va_idx[$j];
 				$ib = $vb_idx[$j];
 				$ic = $vc_idx[$j];
-				print OUTFILEOBJ "  $xcoords[$ia], $ycoords[$ia], $zcoords[$ia],\n";
-				print OUTFILEOBJ "  $xcoords[$ib], $ycoords[$ib], $zcoords[$ib],\n";
-				print OUTFILEOBJ "  $xcoords[$ic], $ycoords[$ic], $zcoords[$ic],\n";
+				print OUTFILEOBJ "$xcoords[$ia],$ycoords[$ia],$zcoords[$ia],\n";
+				print OUTFILEOBJ "$xcoords[$ib],$ycoords[$ib],$zcoords[$ib],\n";
+				print OUTFILEOBJ "$xcoords[$ic],$ycoords[$ic],$zcoords[$ic],\n";
 				
 				$mCount[$i] += 3;
 			}
@@ -645,9 +657,9 @@ sub writeOutputOBJ
 					$ia = $na_idx[$j];
 					$ib = $nb_idx[$j];
 					$ic = $nc_idx[$j];
-					print OUTFILEOBJ "  $nx[$ia], $ny[$ia], $nz[$ia],\n";
-					print OUTFILEOBJ "  $nx[$ib], $ny[$ib], $nz[$ib],\n";
-					print OUTFILEOBJ "  $nx[$ic], $ny[$ic], $nz[$ic],\n";
+					print OUTFILEOBJ "$nx[$ia],$ny[$ia],$nz[$ia],\n";
+					print OUTFILEOBJ "$nx[$ib],$ny[$ib],$nz[$ib],\n";
+					print OUTFILEOBJ "$nx[$ic],$ny[$ic],$nz[$ic],\n";
 				}
 			}
 		}
@@ -667,9 +679,9 @@ sub writeOutputOBJ
 					$ia = $ta_idx[$j];
 					$ib = $tb_idx[$j];
 					$ic = $tc_idx[$j];
-					print OUTFILEOBJ "  $tx[$ia], $ty[$ia],\n";
-					print OUTFILEOBJ "  $tx[$ib], $ty[$ib],\n";
-					print OUTFILEOBJ "  $tx[$ic], $ty[$ic],\n";
+					print OUTFILEOBJ "$tx[$ia],$ty[$ia],\n";
+					print OUTFILEOBJ "$tx[$ib],$ty[$ib],\n";
+					print OUTFILEOBJ "$tx[$ic],$ty[$ic],\n";
 				}
 			}
 		}
@@ -728,7 +740,7 @@ sub writeOutputMTL
 			$first += $mCount[$i-1];
 		}
 		
-		print OUTFILEMTL "  $first,\n";
+		print OUTFILEMTL "$first,\n";
 	}
 	print OUTFILEMTL "};\n\n";
 	
@@ -738,7 +750,7 @@ sub writeOutputMTL
 	{
 		$count = $mCount[$i];
 		
-		print OUTFILEMTL "  $count,\n";
+		print OUTFILEMTL "$count,\n";
 	}
 	print OUTFILEMTL "};\n\n";
 	
@@ -750,7 +762,7 @@ sub writeOutputMTL
 		$kaG = $mValues[$i]->[1];
 		$kaB = $mValues[$i]->[2];
 		
-		print OUTFILEMTL "  $kaR, $kaG, $kaB,\n";
+		print OUTFILEMTL "$kaR,$kaG,$kaB,\n";
 	}
 	print OUTFILEMTL "};\n\n";
 	
@@ -762,7 +774,7 @@ sub writeOutputMTL
 		$kdG = $mValues[$i]->[4];
 		$kdB = $mValues[$i]->[5];
 		
-		print OUTFILEMTL "  $kdR, $kdG, $kdB,\n";
+		print OUTFILEMTL "$kdR,$kdG,$kdB,\n";
 	}
 	print OUTFILEMTL "};\n\n";
 	
@@ -774,7 +786,7 @@ sub writeOutputMTL
 		$ksG = $mValues[$i]->[7];
 		$ksB = $mValues[$i]->[8];
 		
-		print OUTFILEMTL "  $ksR, $ksG, $ksB,\n";
+		print OUTFILEMTL "$ksR,$ksG,$ksB,\n";
 	}
 	print OUTFILEMTL "};\n\n";
 	
@@ -784,7 +796,7 @@ sub writeOutputMTL
 	{
 		$nsE = $mValues[$i]->[9];
 		
-		print OUTFILEMTL "  $nsE,\n";
+		print OUTFILEMTL "$nsE,\n";
 	}
 	print OUTFILEMTL "};\n\n";
 	    	

@@ -50,10 +50,9 @@ struct UniformHandles
     self.glkView = (GLKView *) self.view;
     self.glkView.context = self.context;
     self.glkView.opaque = YES;
-    self.glkView.backgroundColor = [UIColor blackColor];
+    self.glkView.backgroundColor = [UIColor whiteColor];
     self.glkView.drawableColorFormat = GLKViewDrawableColorFormatRGBA8888;
-    self.glkView.drawableDepthFormat = GLKViewDrawableDepthFormat24;
-    self.glkView.drawableMultisample = GLKViewDrawableMultisample4X;
+    self.glkView.drawableDepthFormat = GLKViewDrawableDepthFormat16;
     
     // Initialize Class Objects
     self.shaderProcessor = [[ShaderProcessor alloc] init];
@@ -70,15 +69,18 @@ struct UniformHandles
     glEnable(GL_DEPTH_TEST);
     
     // Projection Matrix
-    float aspectRatio = fabsf(self.view.bounds.size.width / self.view.bounds.size.height);
-    _projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(90.0f), aspectRatio, 0.1, 1.1);
+    CGRect screen = [[UIScreen mainScreen] bounds];
+    float aspectRatio = fabsf(screen.size.width / screen.size.height);
+    _projectionMatrix = GLKMatrix4MakeOrtho(-1.0, 1.0, -1.0/aspectRatio, 1.0/aspectRatio, 0.1, 10.1);
     
     // ModelView Matrix
     _modelViewMatrix = GLKMatrix4Identity;
     
+    // Initialize Model Pose
+    self.transformations = [[Transformations alloc] initWithDepth:5.0f Scale:1.33f Translation:GLKVector2Make(0.0f, 0.0f) Rotation:GLKVector3Make(0.0f, 0.0f, 0.0f)];
+    
     // Load Texture
-    UIImage* textureImage = [UIImage imageNamed:@"cube.png"];
-    [self loadTexture:textureImage];
+    [self loadTexture:@"cube.png"];
     
     // Create the GLSL program
     _program = [self.shaderProcessor BuildProgram:ShaderV with:ShaderF];
@@ -101,44 +103,29 @@ struct UniformHandles
     _uniforms.uMode = glGetUniformLocation(_program, "uMode");
 }
 
-- (void)loadTexture:(UIImage *)textureImage
+- (void)loadTexture:(NSString *)fileName
 {
-    glGenTextures(1, &_texture);
-    glBindTexture(GL_TEXTURE_2D, _texture);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    NSDictionary* options = @{[NSNumber numberWithBool:YES] : GLKTextureLoaderOriginBottomLeft};
     
-    CGImageRef cgImage = textureImage.CGImage;
-    float imageWidth = CGImageGetWidth(cgImage);
-    float imageHeight = CGImageGetHeight(cgImage);
-    CFDataRef data = CGDataProviderCopyData(CGImageGetDataProvider(cgImage));
+    NSError* error;
+    NSString* path = [[NSBundle mainBundle] pathForResource:fileName ofType:nil];
+    GLKTextureInfo* texture = [GLKTextureLoader textureWithContentsOfFile:path options:options error:&error];
+    if(texture == nil)
+        NSLog(@"Error loading file: %@", [error localizedDescription]);
     
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, CFDataGetBytePtr(data));
+    glBindTexture(GL_TEXTURE_2D, texture.name);
 }
 
 - (void)updateViewMatrices
 {
     // ModelView Matrix
-    _modelViewMatrix = GLKMatrix4MakeTranslation(0.0, 0.1, -0.6);
-    _modelViewMatrix = GLKMatrix4Rotate(_modelViewMatrix, GLKMathDegreesToRadians(self.rotateX.value), 1.0, 0.0, 0.0);
-    _modelViewMatrix = GLKMatrix4Rotate(_modelViewMatrix, GLKMathDegreesToRadians(self.rotateY.value), 0.0, 1.0, 0.0);
-    _modelViewMatrix = GLKMatrix4Rotate(_modelViewMatrix, GLKMathDegreesToRadians(self.rotateZ.value), 0.0, 0.0, 1.0);
-    _modelViewMatrix = GLKMatrix4Scale(_modelViewMatrix, 0.30, 0.33, 0.30);
+    _modelViewMatrix = [self.transformations getModelViewMatrix];
     
     // Normal Matrix
     // Transform object-space normals into eye-space
     _normalMatrix = GLKMatrix3Identity;
     bool isInvertible;
-    GLKMatrix4 normalFull = GLKMatrix4InvertAndTranspose(_modelViewMatrix, &isInvertible);
-    
-    GLKMatrix3 normalTemp =
-    {
-        normalTemp.m00 = normalFull.m00, normalTemp.m01 = normalFull.m01, normalTemp.m02 = normalFull.m02,
-        normalTemp.m10 = normalFull.m10, normalTemp.m11 = normalFull.m11, normalTemp.m12 = normalFull.m12,
-        normalTemp.m20 = normalFull.m20, normalTemp.m21 = normalFull.m21, normalTemp.m22 = normalFull.m22
-    };
-    
-    _normalMatrix = normalTemp;
+    _normalMatrix = GLKMatrix4GetMatrix3(GLKMatrix4InvertAndTranspose(_modelViewMatrix, &isInvertible));
 }
 
 # pragma mark - GLKView Delegate
@@ -146,7 +133,7 @@ struct UniformHandles
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
     // Clear Buffers
-    glClearColor(0.0, 0.0, 0.0, 1.0);
+    glClearColor(1.0, 1.0, 1.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     // Set View Matrices
@@ -156,8 +143,6 @@ struct UniformHandles
     glUniformMatrix3fv(_uniforms.uNormalMatrix, 1, 0, _normalMatrix.m);
     
     // Attach Texture
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _texture);
     glUniform1i(_uniforms.uTexture, 0);
     
     // Set View Mode
@@ -195,6 +180,58 @@ struct UniformHandles
 
 - (void)glkViewControllerUpdate:(GLKViewController *)controller
 {
+}
+
+// GESTURES
+
+# pragma mark - Gestures
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    // Begin transformations
+    [self.transformations start];
+}
+
+- (IBAction)pan:(UIPanGestureRecognizer *)sender
+{
+    // Pan (1 Finger)
+    if((sender.numberOfTouches == 1) &&
+       ((self.transformations.state == S_NEW) || (self.transformations.state == S_TRANSLATION)))
+    {
+        CGPoint translation = [sender translationInView:sender.view];
+        float x = translation.x/sender.view.frame.size.width;
+        float y = translation.y/sender.view.frame.size.height;
+        [self.transformations translate:GLKVector2Make(x, y) withMultiplier:2.0f];
+    }
+    
+    // Pan (2 Fingers)
+    else if((sender.numberOfTouches == 2) &&
+            ((self.transformations.state == S_NEW) || (self.transformations.state == S_ROTATION)))
+    {
+        const float m = GLKMathDegreesToRadians(0.5f);
+        CGPoint rotation = [sender translationInView:sender.view];
+        [self.transformations rotate:GLKVector3Make(rotation.x, rotation.y, 0.0f) withMultiplier:m];
+    }
+}
+
+- (IBAction)pinch:(UIPinchGestureRecognizer *)sender
+{
+    // Pinch
+    if((self.transformations.state == S_NEW) || (self.transformations.state == S_SCALE))
+    {
+        float scale = [sender scale];
+        [self.transformations scale:scale];
+    }
+}
+
+- (IBAction)rotation:(UIRotationGestureRecognizer *)sender
+{
+    // Rotation
+    if((self.transformations.state == S_NEW) || (self.transformations.state == S_ROTATION))
+    {
+        float rotation = [sender rotation];
+        [self.transformations rotate:GLKVector3Make(0.0f, 0.0f, rotation) withMultiplier:1.0f];
+    }
 }
 
 @end

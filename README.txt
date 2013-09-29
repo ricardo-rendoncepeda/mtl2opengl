@@ -1,7 +1,7 @@
 README
 
-mtl2opengl Version 1.2 (30 December 2012)
-Copyright © 2012 Ricardo Rendon Cepeda
+mtl2opengl Version 1.3 (28 September 2013)
+Copyright © 2013 Ricardo Rendon Cepeda
 <http://www.rendoncepeda.com/>
 
 
@@ -20,7 +20,7 @@ where model.obj and model.mtl are the .obj and corresponding .mtl files of your 
 ACCOMPANYING FILES
 The full project includes:
 -Resources: Example 3D models for a cube and pyramid shape, with .obj, .mtl, .png (texture) files and the resulting .h header files produced by the script.
--Xcode: A full Xcode project showing how to implement the resulting .h files on an iPhone application using GLKit and OpenGL ES 2.0 with Vertex and Fragment shaders.
+-Xcode: A full Xcode project showing how to implement the resulting .h files on an iPhone application using GLKit and OpenGL ES with Vertex and Fragment shaders.
 
 
 ACKNOWLEDGEMENTS
@@ -32,6 +32,18 @@ Margaret Geroch
 
 
 VERSION HISTORY
+
+Version 1.3
+-----------
+- Removed whitespace as suggested by @GuntisTreulands, resulting in a smaller header file.
+- The example Xcode project has been updated to include the script changes.
+- The example Xcode project has been updated to iOS 7.
+- The example Xcode project has better OpenGL ES performance for iPhone 4 due to decreased depth format and no multisample (now runs at 30 FPS)
+- The example Xcode project now uses gesture recognizers to transform the model: translate XY (1-finger pan), rotate XY (2-finger pan), rotate Z (rotation), scale XYZ (pinch).
+- Resulting file reductions
+-- cubeOBJ.h: 5.5 MB -> 4.6 MB
+-- cubeMTL.h: 2.0 KB -> 1.0 KB
+-- Total reduction is approximately 16%
 
 Version 1.2
 -----------

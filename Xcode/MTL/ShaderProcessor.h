@@ -13,6 +13,5 @@
 @interface ShaderProcessor : NSObject
 
 - (GLuint)BuildProgram:(const char*)vertexShaderSource with:(const char*)fragmentShaderSource;
-- (GLuint)BuildShader:(const char*)source with:(GLenum)shaderType;
 
 @end

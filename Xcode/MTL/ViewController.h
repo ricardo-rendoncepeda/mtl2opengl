@@ -7,12 +7,14 @@
 //
 
 // Frameworks
-#import <UIKit/UIKit.h>
 #import <GLKit/GLKit.h>
 
 // Models
 #import "cubeOBJ.h"
 #import "cubeMTL.h"
+
+// Transformations
+#import "Transformations.h"
 
 // Shaders
 #import "ShaderProcessor.h"
@@ -34,6 +36,7 @@
 
 // Class Objects
 @property (strong, nonatomic) ShaderProcessor* shaderProcessor;
+@property (strong, nonatomic) Transformations* transformations;
 
 // View
 @property (strong, nonatomic) EAGLContext* context;
