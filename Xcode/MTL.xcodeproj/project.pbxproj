@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		AE128E0E163EF2FA0044AD30 /* cube.png in Resources */ = {isa = PBXBuildFile; fileRef = AE128E0A163EF2E10044AD30 /* cube.png */; };
-		AE2AC9301634534000E0DBFD /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE2AC92F1634534000E0DBFD /* Default-568h@2x.png */; };
 		AE38F029163CB3B500FBD0AC /* pyramid.png in Resources */ = {isa = PBXBuildFile; fileRef = AE38F028163CB3B500FBD0AC /* pyramid.png */; };
 		AE4E12861632D40B00D90D0C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE4E12851632D40B00D90D0C /* UIKit.framework */; };
 		AE4E12881632D40B00D90D0C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE4E12871632D40B00D90D0C /* Foundation.framework */; };
@@ -21,6 +20,7 @@
 		AE4E12BA1632D55A00D90D0C /* ShaderProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = AE4E12B91632D55A00D90D0C /* ShaderProcessor.m */; };
 		AE4E12BC1632D58600D90D0C /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE4E12BB1632D58600D90D0C /* GLKit.framework */; };
 		AE4E12BE1632D58C00D90D0C /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE4E12BD1632D58C00D90D0C /* OpenGLES.framework */; };
+		AE7EB7A01802173F002BF00E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AE7EB79F1802173F002BF00E /* Images.xcassets */; };
 		AEF3393E17F7B13A00DB4328 /* Transformations.m in Sources */ = {isa = PBXBuildFile; fileRef = AEF3393D17F7B13A00DB4328 /* Transformations.m */; };
 /* End PBXBuildFile section */
 
@@ -28,7 +28,6 @@
 		AE128E08163EF2E10044AD30 /* cube.mtl */ = {isa = PBXFileReference; lastKnownFileType = text; path = cube.mtl; sourceTree = "<group>"; };
 		AE128E09163EF2E10044AD30 /* cube.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
 		AE128E0A163EF2E10044AD30 /* cube.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cube.png; sourceTree = "<group>"; };
-		AE2AC92F1634534000E0DBFD /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		AE38F028163CB3B500FBD0AC /* pyramid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pyramid.png; sourceTree = "<group>"; };
 		AE4E12811632D40B00D90D0C /* MTL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MTL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE4E12851632D40B00D90D0C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -51,6 +50,7 @@
 		AE4E12C41632D6EB00D90D0C /* Shader.fsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = Shader.fsh; sourceTree = "<group>"; };
 		AE770AA5163EC4E200C66AC5 /* pyramid.mtl */ = {isa = PBXFileReference; lastKnownFileType = text; path = pyramid.mtl; sourceTree = "<group>"; };
 		AE770AA6163EC4E200C66AC5 /* pyramid.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = pyramid.obj; sourceTree = "<group>"; };
+		AE7EB79F1802173F002BF00E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		AEF3393717F7ADEF00DB4328 /* cubeMTL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cubeMTL.h; sourceTree = "<group>"; };
 		AEF3393817F7ADEF00DB4328 /* cubeOBJ.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cubeOBJ.h; sourceTree = "<group>"; };
 		AEF3393917F7ADEF00DB4328 /* pyramidMTL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pyramidMTL.h; sourceTree = "<group>"; };
@@ -78,7 +78,6 @@
 		AE4E12761632D40B00D90D0C = {
 			isa = PBXGroup;
 			children = (
-				AE2AC92F1634534000E0DBFD /* Default-568h@2x.png */,
 				AE4E128B1632D40B00D90D0C /* MTL */,
 				AE4E12841632D40B00D90D0C /* Frameworks */,
 				AE4E12821632D40B00D90D0C /* Products */,
@@ -108,6 +107,7 @@
 		AE4E128B1632D40B00D90D0C /* MTL */ = {
 			isa = PBXGroup;
 			children = (
+				AE7EB79F1802173F002BF00E /* Images.xcassets */,
 				AE4E12941632D40B00D90D0C /* AppDelegate.h */,
 				AE4E12951632D40B00D90D0C /* AppDelegate.m */,
 				AE4E129D1632D40B00D90D0C /* MainStoryboard.storyboard */,
@@ -226,9 +226,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE128E0E163EF2FA0044AD30 /* cube.png in Resources */,
+				AE7EB7A01802173F002BF00E /* Images.xcassets in Resources */,
 				AE4E12901632D40B00D90D0C /* InfoPlist.strings in Resources */,
 				AE4E129F1632D40B00D90D0C /* MainStoryboard.storyboard in Resources */,
-				AE2AC9301634534000E0DBFD /* Default-568h@2x.png in Resources */,
 				AE38F029163CB3B500FBD0AC /* pyramid.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -323,11 +323,14 @@
 		AE4E12A61632D40B00D90D0C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MTL/MTL-Prefix.pch";
 				INFOPLIST_FILE = "MTL/MTL-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -337,11 +340,14 @@
 		AE4E12A71632D40B00D90D0C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MTL/MTL-Prefix.pch";
 				INFOPLIST_FILE = "MTL/MTL-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
