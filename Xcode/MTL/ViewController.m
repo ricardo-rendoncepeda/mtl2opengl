@@ -71,7 +71,7 @@ struct UniformHandles
     // Projection Matrix
     CGRect screen = [[UIScreen mainScreen] bounds];
     float aspectRatio = fabsf(screen.size.width / screen.size.height);
-    _projectionMatrix = GLKMatrix4MakeOrtho(-1.0, 1.0, -1.0/aspectRatio, 1.0/aspectRatio, 0.1, 10.1);
+    _projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(45.0), aspectRatio, 0.1, 10.1);
     
     // ModelView Matrix
     _modelViewMatrix = GLKMatrix4Identity;
