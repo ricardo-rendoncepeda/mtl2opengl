@@ -1,5 +1,7 @@
 README
 
+*** This project has been discontinued and is no longer supported. Thank you for all the stars and contributions! Please see my Blender-to-OpenGL ES tutorial series for a similar project <http://www.raywenderlich.com/48293/how-to-export-blender-models-to-opengl-es-part-1> ***
+
 mtl2opengl Version 1.3 (28 September 2013)
 Copyright © 2013 Ricardo Rendon Cepeda
 <http://www.rendoncepeda.com/>
